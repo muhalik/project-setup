@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import Config from '../sdk/Config'
 
 class Users extends Component {
     constructor(props) {
@@ -11,11 +12,10 @@ class Users extends Component {
 
     async componentDidMount() {
         const currentComponent = this
-
         const url = Config.PATH + '/api/users/'
         await axios.get(url).then((response) => {
             console.log('Users:', response.data.data)
-            currentComponent.setState({ users: response.data.data })
+            currentComponent.setState({ users: response.data.data.docs })
         }).catch((error) => {
             alert('Data Fetchig Error: ', error)
         });
@@ -28,9 +28,7 @@ class Users extends Component {
                     {this.state.users && this.state.users.map(element =>
                         <>
                             <label>User Name:</label>
-                            <label>{users.username}</label>
-                            <label>Password:</label>
-                            <label>{users.password}</label>
+                            <label>{element.username}</label>
                             <br />
                             <br />
                         </>

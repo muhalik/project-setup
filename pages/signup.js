@@ -20,8 +20,6 @@ class Signup extends Component {
             data = { username: this.state.username, password: this.state.password }
             await axios.post(url, {
                 data
-            }, {
-                headers: { 'authorization': await getUncodededTokenFromStorage() }
             }).then(function (response) {
                 alert('User Signup Successfully')
             }).catch(function (error) {

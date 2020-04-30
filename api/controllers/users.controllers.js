@@ -48,14 +48,14 @@ usersController.getSingleUser = async (req, res) => {
 
 usersController.registerUser = async (req, res) => {
   try {
-    const body = req.body;
-    const result = await Users.findOne({ mobile: body.mobile });
+    const body = req.body.data;
+    const result = await Users.findOne({ username: body.username });
     if (result) {
       res.send({
-          message: "This email or mobile number has been registered already",
-          code:500
-        }).status(500);
-       } else {
+        message: "This email or mobile number has been registered already",
+        code: 500
+      }).status(500);
+    } else {
       const password = body.password;
       var salt = bcrypt.genSaltSync(10);
       var hash = bcrypt.hashSync(password, salt);
@@ -95,7 +95,7 @@ usersController.loginUser = async (req, res) => {
       // this means result is null
       res.status(401).send({
         message: "This user doesnot exists. Please signup first",
-        code:401
+        code: 401
       });
     } else {
       // email did exist
